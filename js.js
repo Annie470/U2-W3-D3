@@ -1,3 +1,14 @@
+//variabile carrello
+const pCart = document.getElementById("special-p");
+let cart = parseFloat(localStorage.getItem("cart"));
+if (!cart) {
+  cart = 0;
+  localStorage.setItem("cart", cart.toFixed(2));
+  pCart.innerText = 0;
+} else {
+  pCart.innerText = cart.toFixed(2);
+}
+
 const getLibData = function () {
   fetch(" https://striveschool-api.herokuapp.com/books")
     .then((response) => {
@@ -32,8 +43,9 @@ const getCards = function (array) {
     <p class="card-text">${element.price}</p>
   </div>
   <div class="d-flex flex-column align-items-center">
-    <button class="btn btn-outline-warning text-black w-75 mb-1 add">Add/Remove</button>
-    <button class="btn btn-outline-warning text-black w-75 mb-2 canc">Canc</button>
+    <button class="btn btn-outline-warning text-black w-75 mb-1 add">Add</button>
+    <button class="btn btn-outline-warning text-black w-75 mb-1 remove">Remove</button>
+    <button class="btn btn-outline-danger text-black w-75 mt-4 mb-2 canc">Discard</button>
   </div>
 </div>`;
     const row = document.querySelector(".row");
@@ -45,13 +57,25 @@ const getCards = function (array) {
       card.classList.add("d-none");
     });
 
+    const price = card.querySelector("p+p");
+    const priceN = Math.floor(parseFloat(price.textContent) * 100) / 100;
+
     //bottone carrello
     const addBtn = card.querySelector(".add");
     addBtn.addEventListener("click", () => {
-      const price = card.querySelector("p+p");
-      const priceN = parseFloat(price.textContent);
-      console.log(priceN);
-      localStorage.setItem("cart", priceN);
+      cart += priceN;
+      localStorage.setItem("cart", cart.toFixed(2));
+      //il p del cart
+      pCart.innerHTML = cart.toFixed(2);
+    });
+
+    //bottone rimuovi da carrello
+    const remBtn = card.querySelector(".remove");
+    remBtn.addEventListener("click", () => {
+      cart -= priceN;
+      localStorage.setItem("cart", cart);
+      //il p del cart
+      pCart.innerHTML = cart.toFixed(2);
     });
   });
 };

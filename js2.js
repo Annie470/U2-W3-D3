@@ -70,8 +70,9 @@ const getCards = function (array) {
       let tot = arrayP.reduce((acc, n) => {
         return acc + n;
       }, 0);
-      pCart.innerText = tot.toFixed(2);
-      localStorage.setItem("cart", tot.toFixed(2));
+      let cart2 = cart + tot;
+      pCart.innerText = cart2.toFixed(2);
+      localStorage.setItem("cart", cart2.toFixed(2));
     });
   });
 };

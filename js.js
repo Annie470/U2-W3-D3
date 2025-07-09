@@ -8,6 +8,8 @@ if (!cart) {
 } else {
   pCart.innerText = cart.toFixed(2);
 }
+const arrayCart = [cart];
+console.log(cart);
 
 const getLibData = function () {
   fetch(" https://striveschool-api.herokuapp.com/books")
@@ -63,7 +65,10 @@ const getCards = function (array) {
     //bottone carrello
     const addBtn = card.querySelector(".add");
     addBtn.addEventListener("click", () => {
-      cart += priceN;
+      arrayCart.push(priceN);
+      cart = arrayCart.reduce((acc, n) => {
+        return acc + n;
+      });
       localStorage.setItem("cart", cart.toFixed(2));
       //il p del cart
       pCart.innerHTML = cart.toFixed(2);

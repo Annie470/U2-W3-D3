@@ -29,7 +29,7 @@ const getCards = function (array) {
   <div class="card-body d-flex flex-column flex-grow-1">
     <h5 class="card-title">${element.title}</h5>
     <p class="card-text">Category: ${element.category}</p>
-    <p class="card-text">Price: ${element.price}</p>
+    <p class="card-text">${element.price}</p>
   </div>
   <div class="d-flex flex-column align-items-center">
     <button class="btn btn-outline-warning text-black w-75 mb-1 add">Add/Remove</button>
@@ -47,5 +47,11 @@ const getCards = function (array) {
 
     //bottone carrello
     const addBtn = card.querySelector(".add");
+    addBtn.addEventListener("click", () => {
+      const price = card.querySelector("p+p");
+      const priceN = parseFloat(price.textContent);
+      console.log(priceN);
+      localStorage.setItem("cart", priceN);
+    });
   });
 };
